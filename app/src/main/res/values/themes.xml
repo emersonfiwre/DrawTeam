@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.DrawTeam" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/draw_team_yellow</item>
+        <item name="colorPrimaryDark">@color/draw_team_yellow_dark</item>
+        <item name="colorAccent">@color/draw_team_night_blue</item>
+        <item name="android:textColor">@color/draw_team_little_black</item>
+<!--        <item name="colorBackgroundFloating">-->
+<!--            @color/draw_team_transparent</item>-->
+<!--        <item name="android:colorBackgroundFloating" >-->
+<!--            @color/draw_team_transparent</item>-->
+<!--        <item name="android:backgroundTint">@color/draw_team_white</item>-->
+    </style>
+
+    <style name="DrawTeamDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:background">@color/draw_team_white</item>
+    </style>
+
+    <style name="Theme.DrawTeam" parent="Base.Theme.DrawTeam" />
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/draw_team_little_black</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextColor">@color/draw_team_little_black</item>
+    </style>
+</resources>

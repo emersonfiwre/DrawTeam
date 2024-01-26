@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/id_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/draw_team_add_player"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/id_dialog_edit_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/draw_team_name"
+        android:imeOptions="actionDone"
+        android:inputType="textCapSentences"
+        android:scrollHorizontally="true"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/id_dialog_title" />
+
+
+    <TextView
+        android:id="@+id/id_dialog_is_goalkeeper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="8dp"
+        android:text="@string/draw_team_is_goalkeeper"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/id_dialog_edit_name" />
+
+    <RadioGroup
+        android:id="@+id/id_dialog_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/radio_button_1"
+        app:layout_constraintTop_toBottomOf="@id/id_dialog_is_goalkeeper">
+
+        <RadioButton
+            android:id="@+id/id_radio_button_no_goalkeeper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:checked="true"
+            android:text="@string/draw_team_no" />
+
+        <RadioButton
+            android:id="@+id/id_radio_button_goalkeeper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/draw_team_yes" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
