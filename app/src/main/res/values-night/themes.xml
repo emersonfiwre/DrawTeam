@@ -1,7 +1,62 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DrawTeam" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/draw_team_yellow_medium</item>
+        <item name="colorPrimaryVariant">@color/draw_team_yellow_dark</item>
+        <item name="colorOnPrimary">@color/draw_team_black</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorPrimaryDark">@color/draw_team_night_blue</item>
+        <item name="colorSecondary">@color/draw_team_night_blue</item>
+        <item name="colorSecondaryVariant">@color/draw_team_night_blue_light</item>
+        <item name="colorOnSecondary">@color/draw_team_white</item>
+
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/draw_team_yellow</item>
+        <item name="android:textColor">@color/draw_team_white</item>
+    </style>
+
+    <style name="DrawTeamDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:background">@color/draw_team_black</item>
+        <item name="materialAlertDialogBodyTextStyle">
+            @style/BodyTextAppearance.MaterialComponents.Body2
+        </item>
+    </style>
+
+    <style name="BodyTextAppearance.MaterialComponents.Body2" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/draw_team_white</item>
+    </style>
+
+    <style name="DrawTeamBottomSheetDialogTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="android:background">@color/draw_team_black</item>
+        <item name="android:textColor">@color/draw_team_white</item>
+    </style>
+
+    <style name="DrawTeamTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/draw_team_white</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextColor">@color/draw_team_white</item>
+    </style>
+
+    <style name="DrawTeamBackground">
+        <item name="android:backgroundTint">@color/draw_team_white</item>
+        <item name="android:background">@drawable/draw_team_shape_corners</item>
+    </style>
+
+    <style name="DrawTeamBottomNavigationBackground" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/draw_team_little_black</item>
+    </style>
+
+    <style name="DrawTeamTintStopTheme">
+        <item name="android:tint">@color/draw_team_gray</item>
+    </style>
+
+    <style name="DrawTeamTintYellowDarkTheme">
+        <item name="android:tint">@color/draw_team_yellow</item>
+    </style>
+
+    <style name="DrawTeamTintSettingTheme">
+        <item name="android:tint">@color/draw_team_yellow</item>
     </style>
 </resources>

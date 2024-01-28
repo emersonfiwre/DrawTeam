@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/draw_team_white"
     tools:context=".features.home.view.fragment.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,6 +12,7 @@
 
         <ImageView
             android:id="@+id/id_draw_config"
+            style="@style/DrawTeamTintSettingTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -52,6 +52,7 @@
 
         <ImageView
             android:id="@+id/id_draw_start_game"
+            style="@style/DrawTeamTintYellowDarkTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -66,6 +67,7 @@
 
         <ImageView
             android:id="@+id/id_draw_cancel_game"
+            style="@style/DrawTeamTintStopTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/draw_team_cancel"

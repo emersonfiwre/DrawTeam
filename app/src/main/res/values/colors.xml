@@ -2,12 +2,16 @@
 <resources>
     <color name="draw_team_black">#FF000000</color>
     <color name="draw_team_white">#FFFFFFFF</color>
+    <color name="draw_team_gray">#808080</color>
     <color name="draw_team_red">#C83737</color>
     <color name="draw_team_little_black">#232323</color>
     <color name="draw_team_yellow">#F7B300</color>
+    <color name="draw_team_yellow_medium">#E4BA4B</color>
     <color name="draw_team_yellow_dark">#A9715304</color>
+    <color name="draw_team_yellow_dark_medium">#A9513C04</color>
     <color name="draw_team_light_yellow">#FFF4E4</color>
     <color name="draw_team_dark_gray">#3D4F58</color>
     <color name="draw_team_night_blue">#081419</color>
+    <color name="draw_team_night_blue_light">#173440</color>
     <color name="draw_team_transparent">@android:color/transparent</color>
 </resources>

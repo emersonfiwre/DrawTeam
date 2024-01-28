@@ -2,9 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DrawTeamBottomSheetDialogTheme"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/draw_team_white"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,18 +16,17 @@
             android:id="@+id/id_dialog_draw_view"
             android:layout_width="240dp"
             android:layout_height="2dp"
-            android:background="@drawable/draw_team_shape_corners"
+            style="@style/DrawTeamBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/id_dialog_draw_txt_input_search"
-            style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:theme="@style/TextInputLayout"
+            android:theme="@style/DrawTeamTextInputLayout"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
