@@ -9,7 +9,7 @@ import br.com.emersonfiwre.drawteam.commons.model.PlayerModel
 import br.com.emersonfiwre.drawteam.features.player.model.PlayerTypeEnum
 import br.com.emersonfiwre.drawteam.features.player.model.PlayerViewType
 import br.com.emersonfiwre.drawteam.features.player.view.viewholder.AddPlayerViewHolder
-import br.com.emersonfiwre.drawteam.features.player.view.viewholder.PlayerViewHolder
+import br.com.emersonfiwre.drawteam.commons.view.viewholder.PlayerViewHolder
 
 class PlayerAdapter(
     private val playerViewTypeList: MutableList<PlayerViewType>,

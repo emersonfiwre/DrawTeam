@@ -1,28 +1,29 @@
 package br.com.emersonfiwre.drawteam.features.drawplayers.usecase
 
 import android.util.Log
-import br.com.emersonfiwre.drawteam.commons.constants.DrawTeamConstants
+import br.com.emersonfiwre.drawteam.commons.constants.DrawTeamConstants.ZERO_INT
 import br.com.emersonfiwre.drawteam.commons.model.PlayerModel
 import br.com.emersonfiwre.drawteam.commons.model.TeamModel
+import br.com.emersonfiwre.drawteam.features.drawplayers.repository.DrawPlayersRepository
 import br.com.emersonfiwre.drawteam.features.drawplayers.usecase.state.DrawPlayerUseCaseState
 import br.com.emersonfiwre.drawteam.features.player.model.PlayerStateEnum
-import br.com.emersonfiwre.drawteam.features.player.repository.PlayerDAO
 import br.com.emersonfiwre.drawteam.features.player.usecase.PlayerUseCaseImpl
 
 class DrawPlayersUseCaseImpl(
     private val numberOfTeams: Int,
-    private val playerDao: PlayerDAO
+    private val numberOfPlayers: Int,
+    private val repository: DrawPlayersRepository
 ): DrawPlayersUseCase {
 
     @Suppress("ToGenericExceptionCaught")
-    override fun getPlayers(): DrawPlayerUseCaseState.PlayerListState {
+    override suspend fun getPlayers(): DrawPlayerUseCaseState.PlayerListState {
         return try {
-            val result = playerDao.getAllPlayers()
+            val result = repository.getPlayersBySession()
             if (result.isEmpty()) {
                 DrawPlayerUseCaseState.PlayerListState.DisplayEmptyPlayers
             } else {
                 DrawPlayerUseCaseState.PlayerListState.DisplayPlayers(
-                    result
+                    result, setupCountItemsSelected(result)
                 )
             }
         } catch (ex: Exception) {
@@ -30,6 +31,9 @@ class DrawPlayersUseCaseImpl(
             DrawPlayerUseCaseState.PlayerListState.DisplayError
         }
     }
+
+    private fun setupCountItemsSelected(result: List<PlayerModel>) =
+        result.count { it.playerState == PlayerStateEnum.CHECKED }
 
     @Suppress("ToGenericExceptionCaught")
     override fun setupDrawPlayers(players: List<PlayerModel>): DrawPlayerUseCaseState.TeamShuffledState {
@@ -42,7 +46,8 @@ class DrawPlayersUseCaseImpl(
                     DrawPlayerUseCaseState.TeamShuffledState.DisplayNotPlayersSelected
                 }
 
-                isPlayersForTeam(selectedPlayers) -> {
+                isHavePlayersForTeam(selectedPlayers) -> {
+                    repository.applySelectedPlayers(players)
                     val teams = setupSeparateTeam(selectedPlayers)
                     DrawPlayerUseCaseState.TeamShuffledState.DisplayTeams(teams)
                 }
@@ -57,15 +62,31 @@ class DrawPlayersUseCaseImpl(
         }
     }
 
-    private fun isPlayersForTeam(selectedPlayers: List<PlayerModel>): Boolean =
-        (selectedPlayers.size % numberOfTeams == DrawTeamConstants.ZERO_INT)
+    @Suppress("ToGenericExceptionCaught")
+    override suspend fun setupResetSelection(): DrawPlayerUseCaseState.PlayerListState {
+        return try {
+            val model = repository.resetPlayers()
+            return DrawPlayerUseCaseState.PlayerListState.DisplayPlayers(
+                model,
+                ZERO_INT
+            )
+        } catch (ex: Exception) {
+            Log.d(PlayerUseCaseImpl::javaClass.name, ex.message.toString())
+            DrawPlayerUseCaseState.PlayerListState.DisplayError
+        }
+
+    }
+
+    private fun isHavePlayersForTeam(selectedPlayers: List<PlayerModel>) =
+        (selectedPlayers.size >= (numberOfPlayers * numberOfTeams))
 
     private fun setupSeparateTeam(selectedPlayers: List<PlayerModel>): MutableList<TeamModel> {
         val teams = mutableListOf<TeamModel>()
         val shuffledPlayers = setupShufflePlayers(selectedPlayers)
 
-        val numberPlayerByTeam = selectedPlayers.size / numberOfTeams
-        val playersOfTeams = shuffledPlayers.chunked(numberPlayerByTeam)
+        val substitutes = setupNumberPlayerOfTeam(shuffledPlayers)
+
+        val playersOfTeams = shuffledPlayers.chunked(numberOfPlayers)
 
         playersOfTeams.forEachIndexed { index, players ->
             teams.add(
@@ -74,8 +95,34 @@ class DrawPlayersUseCaseImpl(
         }
 
         setupGoalKeepersForAll(teams)
+        substitutes?.let { teams.addAll(it) }
 
         return teams
+    }
+
+    private fun setupNumberPlayerOfTeam(selectedPlayers: MutableList<PlayerModel>): MutableList<TeamModel>? {
+        val teamSubstitutes = mutableListOf<TeamModel>()
+        val substitutes = mutableListOf<PlayerModel>()
+        var numberPlayerByTeam = selectedPlayers.size.toDouble().div(numberOfTeams.toDouble())
+
+        while (numberPlayerByTeam > numberOfPlayers) {
+            val randomIndex = (ZERO_INT until selectedPlayers.size).random()
+            substitutes.add(selectedPlayers[randomIndex])
+            selectedPlayers.removeAt(randomIndex)
+            numberPlayerByTeam = selectedPlayers.size.toDouble().div(numberOfTeams.toDouble())
+        }
+
+        return if (substitutes.isNotEmpty()) {
+            teamSubstitutes.add(
+                TeamModel(
+                    teamName = "Jogadores reservas",
+                    teamPlayers = substitutes
+                )
+            )
+            teamSubstitutes
+        } else {
+            null
+        }
     }
 
     private fun setupShufflePlayers(selectPlayers: List<PlayerModel>): MutableList<PlayerModel> {
@@ -97,13 +144,10 @@ class DrawPlayersUseCaseImpl(
         teamsGoalKeepers.forEach { teamWithGoalkeeper ->
             val goalkeepers =
                 setupGoalKeepers(teamWithGoalkeeper.teamPlayers)
-            if (goalkeepers.isEmpty()) {
-                return teams
-            }
 
-            val goalPicked = (DrawTeamConstants.ZERO_INT until goalkeepers.size).random()
-            setupChangePlayers(goalkeepers[goalPicked], teamsWithoutGoalKeepers)
-
+            val goalPicked = (ZERO_INT until goalkeepers.size.dec()).random()
+            val teamChanged = setupChangePlayers(goalkeepers[goalPicked], teamsWithoutGoalKeepers)
+            setupChangeTeamToWithGoalKeeper(teamChanged, teamsWithoutGoalKeepers, teamsGoalKeepers)
         }
 
         model.addAll(teamsGoalKeepers)
@@ -111,11 +155,20 @@ class DrawPlayersUseCaseImpl(
         return model
     }
 
+    private fun setupChangeTeamToWithGoalKeeper(
+        teamChanged: TeamModel,
+        teamsWithoutGoalKeepers: MutableList<TeamModel>,
+        teamsGoalKeepers: MutableList<TeamModel>
+    ) {
+        teamsWithoutGoalKeepers.remove(teamChanged)
+        teamsGoalKeepers.add(teamChanged)
+    }
+
     private fun setupTeamsWithMoreGoalKeeper(teams: MutableList<TeamModel>): MutableList<TeamModel> {
         val model = mutableListOf<TeamModel>()
         model.addAll(teams.filter { team ->
             (team.teamPlayers?.filter { it.playerGoalKeeper == true }?.size
-                ?: DrawTeamConstants.ZERO_INT) >= TWO_INT
+                ?: ZERO_INT) >= TWO_INT
         })
         return model
     }
@@ -155,21 +208,21 @@ class DrawPlayersUseCaseImpl(
     private fun setupChangePlayers(
         goalKeeper: PlayerModel,
         teamsWithoutGoalKeepers: MutableList<TeamModel>
-    ): PlayerModel? {
-        val teamIndex = (DrawTeamConstants.ZERO_INT until teamsWithoutGoalKeepers.size).random()
+    ): TeamModel {
+        val teamIndex = (ZERO_INT until teamsWithoutGoalKeepers.size.dec()).random()
         val playerIndex =
-            (DrawTeamConstants.ZERO_INT until (teamsWithoutGoalKeepers[teamIndex].teamPlayers?.size
-                ?: DrawTeamConstants.ZERO_INT)
+            (ZERO_INT until (teamsWithoutGoalKeepers[teamIndex].teamPlayers?.size?.dec()
+                ?: ZERO_INT)
                     ).random()
-        val playerTraded = teamsWithoutGoalKeepers[teamIndex].teamPlayers?.get(playerIndex)
+        val playerChosen = teamsWithoutGoalKeepers[teamIndex].teamPlayers?.get(playerIndex)
 
         teamsWithoutGoalKeepers[teamIndex].teamPlayers = setupChangeInTeamList(
-            playerTraded,
+            playerChosen,
             goalKeeper,
             teamsWithoutGoalKeepers[teamIndex].teamPlayers
         )
 
-        return playerTraded
+        return teamsWithoutGoalKeepers[teamIndex]
     }
 
     @Suppress("ToGenericExceptionCaught")
@@ -179,22 +232,42 @@ class DrawPlayersUseCaseImpl(
     ): DrawPlayerUseCaseState.PlayerListState {
         return try {
             val foundedPlayers = mutableListOf<PlayerModel>()
-            if (parameter.isBlank()) {
-                items?.let { DrawPlayerUseCaseState.PlayerListState.DisplayPlayers(it) }
-            }
+            setupParameterIsBlank(parameter, items)
             if (!items.isNullOrEmpty()) {
                 foundedPlayers.addAll(items.filter {
                     containsPlayer(parameter, it)
                 })
-                DrawPlayerUseCaseState.PlayerListState.DisplayPlayers(foundedPlayers)
+                setupFoundedPlayers(foundedPlayers, setupCountItemsSelected(items))
+
             } else {
-                DrawPlayerUseCaseState.PlayerListState.DisplayEmptyPlayers
+                DrawPlayerUseCaseState.PlayerListState.DisplayNotFoundedPlayers
             }
         } catch (ex: Exception) {
             Log.d(PlayerUseCaseImpl::javaClass.name, ex.message.toString())
             DrawPlayerUseCaseState.PlayerListState.DisplayError
         }
     }
+
+    private fun setupFoundedPlayers(foundedPlayers: MutableList<PlayerModel>, itemsSelected: Int) =
+        if (foundedPlayers.isEmpty()) {
+            DrawPlayerUseCaseState.PlayerListState.DisplayNotFoundedPlayers
+        } else {
+            DrawPlayerUseCaseState.PlayerListState.DisplayPlayers(
+                foundedPlayers, itemsSelected
+            )
+        }
+
+    private fun setupParameterIsBlank(parameter: String, items: List<PlayerModel>?) =
+        if (parameter.isBlank()) {
+            items?.let {
+                DrawPlayerUseCaseState.PlayerListState.DisplayPlayers(
+                    it,
+                    setupCountItemsSelected(it)
+                )
+            }
+        } else {
+            DrawPlayerUseCaseState.PlayerListState.DisplayNotFoundedPlayers
+        }
 
     private fun containsPlayer(
         parameter: String,

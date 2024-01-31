@@ -61,4 +61,8 @@
     <style name="DrawTeamTintSettingTheme">
         <item name="android:tint">@color/draw_team_night_blue</item>
     </style>
+
+    <style name="DrawTeamTintWhiteBlackTheme">
+        <item name="android:tint">@color/draw_team_night_blue</item>
+    </style>
 </resources>

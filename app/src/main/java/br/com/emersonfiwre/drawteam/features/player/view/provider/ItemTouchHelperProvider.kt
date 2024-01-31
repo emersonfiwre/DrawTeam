@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import br.com.emersonfiwre.drawteam.R
 import br.com.emersonfiwre.drawteam.commons.constants.DrawTeamConstants.ZERO_INT
-import br.com.emersonfiwre.drawteam.features.player.view.viewholder.PlayerViewHolder
+import br.com.emersonfiwre.drawteam.commons.view.viewholder.PlayerViewHolder
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class ItemTouchHelperProvider(

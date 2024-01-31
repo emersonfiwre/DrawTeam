@@ -60,6 +60,19 @@ class DrawPlayersViewModel(
     }
 
     @Suppress("ToGenericExceptionCaught")
+    fun setupResetSelection() {
+        coroutineScope.launch {
+            try {
+                val result = useCase.setupResetSelection()
+                handleListPlayer(result)
+            } catch (ex: Exception) {
+                Log.d(PlayerViewModel::javaClass.name, ex.message.toString())
+                drawErrorState.value = DrawPlayersViewState.DrawPlayersError.ShowDrawError
+            }
+        }
+    }
+
+    @Suppress("ToGenericExceptionCaught")
     fun filterByKeywords(parameter: String, items: List<PlayerModel>?) {
         coroutineScope.launch {
             try {
@@ -103,12 +116,19 @@ class DrawPlayersViewModel(
 
             is DrawPlayerUseCaseState.PlayerListState.DisplayPlayers -> {
                 playerListState.value =
-                    DrawPlayersViewState.PlayerListViewState.ShowPlayers(result.items)
+                    DrawPlayersViewState.PlayerListViewState.ShowPlayers(
+                        result.items,
+                        result.itemsSelected
+                    )
             }
 
             DrawPlayerUseCaseState.PlayerListState.DisplayEmptyPlayers -> {
                 playerListState.value =
                     DrawPlayersViewState.PlayerListViewState.ShowEmptyState
+            }
+
+            DrawPlayerUseCaseState.PlayerListState.DisplayNotFoundedPlayers -> {
+                // Not yet implemented
             }
         }
     }
@@ -127,6 +147,11 @@ class DrawPlayersViewModel(
             DrawPlayerUseCaseState.PlayerListState.DisplayEmptyPlayers -> {
                 playerListFoundedState.value =
                     DrawPlayersViewState.PlayerListFoundedViewState.ShowEmptyState
+            }
+
+            DrawPlayerUseCaseState.PlayerListState.DisplayNotFoundedPlayers -> {
+                playerListFoundedState.value =
+                    DrawPlayersViewState.PlayerListFoundedViewState.ShowNotPlayersFoundedState
             }
         }
     }

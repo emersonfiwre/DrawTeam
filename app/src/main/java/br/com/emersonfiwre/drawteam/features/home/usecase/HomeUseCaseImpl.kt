@@ -8,15 +8,23 @@ import br.com.emersonfiwre.drawteam.features.player.usecase.PlayerUseCaseImpl
 class HomeUseCaseImpl: HomeUseCase {
 
     @Suppress("ToGenericExceptionCaught")
-    override fun setupPresentationTeams(teamList: List<TeamModel>): HomeUseCaseState.TeamPresentationState {
+    override fun setupPresentationTeams(teamList: List<TeamModel>?): HomeUseCaseState.TeamPresentationState {
         return try {
-            if (teamList.size == TWO_INT && teamList.isNotEmpty()) {
-                HomeUseCaseState.TeamPresentationState.DisplayTwoTeams(
-                    teamList.first(),
-                    teamList.last()
-                )
-            } else {
-                HomeUseCaseState.TeamPresentationState.DisplayTeams(teamList)
+            when {
+                teamList.isNullOrEmpty() -> {
+                    HomeUseCaseState.TeamPresentationState.DisplayError
+                }
+
+                teamList.size == TWO_INT && teamList.isNotEmpty() -> {
+                    HomeUseCaseState.TeamPresentationState.DisplayTwoTeams(
+                        teamList.first(),
+                        teamList.last()
+                    )
+                }
+
+                else -> {
+                    HomeUseCaseState.TeamPresentationState.DisplayTeams(teamList)
+                }
             }
         } catch (ex: Exception) {
             Log.d(PlayerUseCaseImpl::javaClass.name, ex.message.toString())

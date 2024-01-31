@@ -2,9 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DrawTeamBottomSheetDialogTheme"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/DrawTeamBottomSheetDialogTheme"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,9 +13,10 @@
         android:padding="20dp">
 
         <View
+            android:id="@+id/id_dialog_setting_view_top"
             android:layout_width="120dp"
             android:layout_height="2dp"
-            android:background="@drawable/draw_team_shape_corners"
+            android:theme="@style/DrawTeamBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,8 +28,9 @@
             android:layout_marginTop="16dp"
             android:text="@string/draw_team_select_timer"
             android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_view_top" />
 
         <NumberPicker
             android:id="@+id/id_dialog_setting_number_picker_timer_minute"
@@ -44,18 +46,29 @@
             android:layout_height="wrap_content"
             android:text="@string/draw_team_minutes"
             app:layout_constraintBottom_toBottomOf="@id/id_dialog_setting_number_picker_timer_minute"
-
             app:layout_constraintStart_toEndOf="@id/id_dialog_setting_number_picker_timer_minute"
             app:layout_constraintTop_toTopOf="@id/id_dialog_setting_number_picker_timer_minute" />
+
+
+        <TextView
+            android:id="@+id/id_dialog_setting_txt_setting_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/draw_team_settings_team"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_number_picker_timer_minute" />
 
         <TextView
             android:id="@+id/id_dialog_setting_number_team"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/draw_team_select_number_team"
+            android:text="@string/draw_team_teams"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_number_picker_timer_minute" />
+            app:layout_constraintBottom_toBottomOf="@id/id_dialog_setting_number_picker_team"
+            app:layout_constraintStart_toEndOf="@id/id_dialog_setting_number_picker_team"
+            app:layout_constraintTop_toTopOf="@id/id_dialog_setting_number_picker_team" />
 
         <NumberPicker
             android:id="@+id/id_dialog_setting_number_picker_team"
@@ -64,6 +77,25 @@
             android:layout_marginStart="16dp"
             android:showDividers="none"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_number_team" />
+            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_txt_setting_team" />
+
+        <TextView
+            android:id="@+id/id_dialog_setting_number_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/draw_team_players"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/id_dialog_setting_number_picker_players"
+            app:layout_constraintEnd_toStartOf="@id/id_dialog_setting_number_picker_players"
+            app:layout_constraintTop_toTopOf="@id/id_dialog_setting_number_picker_players" />
+
+        <NumberPicker
+            android:id="@+id/id_dialog_setting_number_picker_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:showDividers="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_txt_setting_team" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

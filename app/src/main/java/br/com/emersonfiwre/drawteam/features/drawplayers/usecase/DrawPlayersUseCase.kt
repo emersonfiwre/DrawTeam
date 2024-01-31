@@ -5,9 +5,11 @@ import br.com.emersonfiwre.drawteam.commons.model.PlayerModel
 
 interface DrawPlayersUseCase {
 
-    fun getPlayers(): DrawPlayerUseCaseState.PlayerListState
+    suspend fun getPlayers(): DrawPlayerUseCaseState.PlayerListState
 
     fun setupDrawPlayers(players: List<PlayerModel>): DrawPlayerUseCaseState.TeamShuffledState
+
+    suspend fun setupResetSelection(): DrawPlayerUseCaseState.PlayerListState
 
     fun foundPlayerByName(
         parameter: String,

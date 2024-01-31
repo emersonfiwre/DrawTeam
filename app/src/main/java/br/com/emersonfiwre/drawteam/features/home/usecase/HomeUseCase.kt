@@ -5,5 +5,5 @@ import br.com.emersonfiwre.drawteam.features.home.usecase.state.HomeUseCaseState
 
 interface HomeUseCase {
 
-    fun setupPresentationTeams(teamList: List<TeamModel>): HomeUseCaseState.TeamPresentationState
+    fun setupPresentationTeams(teamList: List<TeamModel>?): HomeUseCaseState.TeamPresentationState
 }

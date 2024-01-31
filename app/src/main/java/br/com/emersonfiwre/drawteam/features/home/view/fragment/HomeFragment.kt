@@ -14,7 +14,7 @@ import br.com.emersonfiwre.drawteam.commons.model.TeamModel
 import br.com.emersonfiwre.drawteam.features.home.model.TeamViewType
 import br.com.emersonfiwre.drawteam.features.home.view.adapter.TeamsAdapter
 import br.com.emersonfiwre.drawteam.features.drawplayers.view.dialog.DrawPlayersBottomSheetDialog
-import br.com.emersonfiwre.drawteam.features.home.view.dialog.SettingBottomSheetDialog
+import br.com.emersonfiwre.drawteam.features.home.view.dialog.SettingBottomSheet
 import br.com.emersonfiwre.drawteam.features.home.view.provider.CountDownTimerImpl
 import br.com.emersonfiwre.drawteam.features.home.viewmodel.HomeViewModel
 import br.com.emersonfiwre.drawteam.features.home.viewmodel.factory.HomeViewModelFactory
@@ -131,7 +131,7 @@ class HomeFragment: Fragment() {
         }
 
         binding.idDrawConfig.setOnClickListener {
-            SettingBottomSheetDialog.newInstance(childFragmentManager)
+            SettingBottomSheet.newInstance(childFragmentManager)
         }
     }
 

@@ -6,10 +6,13 @@ import br.com.emersonfiwre.drawteam.commons.model.PlayerModel
 object DrawPlayerUseCaseState {
     sealed class PlayerListState {
         data class DisplayPlayers(
-            val items: List<PlayerModel>
+            val items: List<PlayerModel>,
+            val itemsSelected: Int
         ): PlayerListState()
 
         object DisplayEmptyPlayers: PlayerListState()
+
+        object DisplayNotFoundedPlayers: PlayerListState()
 
         object DisplayError: PlayerListState()
     }

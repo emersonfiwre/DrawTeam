@@ -6,6 +6,7 @@
     <color name="draw_team_red">#C83737</color>
     <color name="draw_team_little_black">#232323</color>
     <color name="draw_team_yellow">#F7B300</color>
+    <color name="draw_team_yellow_accent">#BA8700</color>
     <color name="draw_team_yellow_medium">#E4BA4B</color>
     <color name="draw_team_yellow_dark">#A9715304</color>
     <color name="draw_team_yellow_dark_medium">#A9513C04</color>

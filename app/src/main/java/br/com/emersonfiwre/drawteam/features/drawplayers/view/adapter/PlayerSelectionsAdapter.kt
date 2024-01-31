@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.emersonfiwre.drawteam.databinding.DrawTeamAdapterPlayerBinding
 import br.com.emersonfiwre.drawteam.commons.model.PlayerModel
-import br.com.emersonfiwre.drawteam.features.player.view.viewholder.PlayerViewHolder
+import br.com.emersonfiwre.drawteam.commons.view.viewholder.PlayerViewHolder
 
 class PlayerSelectionsAdapter(
     private val playerList: MutableList<PlayerModel>,

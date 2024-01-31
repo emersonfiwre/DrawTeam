@@ -25,7 +25,7 @@ class HomeViewModel(
         get() = homeErrorState
 
     @Suppress("ToGenericExceptionCaught")
-    fun setupListTeams(teamList: List<TeamModel>) {
+    fun setupListTeams(teamList: List<TeamModel>?) {
         coroutineScope.launch {
             try {
                 val result = useCase.setupPresentationTeams(teamList)

@@ -1,4 +1,4 @@
-package br.com.emersonfiwre.drawteam.features.player.view.viewholder
+package br.com.emersonfiwre.drawteam.commons.view.viewholder
 
 import android.view.View
 import android.widget.CheckBox
@@ -25,13 +25,6 @@ class PlayerViewHolder(
             binding.idAdapterPlayerCheckBox.visibility = View.GONE
             binding.idAdapterPlayerName.text = playerModel.playerName
         }
-    }
-
-    fun bind(name: String?) {
-        binding.idAdapterPlayerCheckBox.visibility = View.GONE
-        binding.idAdapterPlayerName.visibility = View.GONE
-        binding.idAdapterPlayerTitle.visibility = View.VISIBLE
-        binding.idAdapterPlayerTitle.text = name
     }
 
     private fun CheckBox.setIsChecked(playerModel: PlayerModel) = this.run {
