@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import br.com.emersonfiwre.drawteam.R
+import br.com.emersonfiwre.drawteam.commons.extensions.disableDontKeepActivities
 import br.com.emersonfiwre.drawteam.databinding.DrawTeamActivityMainBinding
 import br.com.emersonfiwre.drawteam.features.home.view.fragment.HomeFragment
 import br.com.emersonfiwre.drawteam.features.player.view.fragment.PlayerFragment
@@ -16,10 +17,6 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DrawTeamActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
-
-    override fun onStart() {
-        super.onStart()
         replaceFragment(HomeFragment())
         setupBottomNavigation()
     }

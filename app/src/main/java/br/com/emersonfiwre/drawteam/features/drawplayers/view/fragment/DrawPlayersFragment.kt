@@ -1,29 +1,28 @@
-package br.com.emersonfiwre.drawteam.features.drawplayers.view.dialog
+package br.com.emersonfiwre.drawteam.features.drawplayers.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import br.com.emersonfiwre.drawteam.R
 import br.com.emersonfiwre.drawteam.commons.constants.DrawTeamConstants.ZERO_INT
+import br.com.emersonfiwre.drawteam.commons.model.PlayerModel
+import br.com.emersonfiwre.drawteam.commons.model.TeamModel
 import br.com.emersonfiwre.drawteam.commons.view.dialog.ErrorDialogFragment
+import br.com.emersonfiwre.drawteam.commons.view.listener.DrawTeamListener
 import br.com.emersonfiwre.drawteam.databinding.DrawTeamDialogDrawBinding
 import br.com.emersonfiwre.drawteam.features.drawplayers.view.adapter.PlayerSelectionsAdapter
+import br.com.emersonfiwre.drawteam.features.drawplayers.view.listener.TextWatchImpl
 import br.com.emersonfiwre.drawteam.features.drawplayers.viewmodel.DrawPlayersViewModel
 import br.com.emersonfiwre.drawteam.features.drawplayers.viewmodel.factory.DrawPlayersViewModelFactory
 import br.com.emersonfiwre.drawteam.features.drawplayers.viewmodel.viewstate.DrawPlayersViewState
-import br.com.emersonfiwre.drawteam.commons.model.TeamModel
-import br.com.emersonfiwre.drawteam.features.drawplayers.view.listener.TextWatchImpl
-import br.com.emersonfiwre.drawteam.commons.model.PlayerModel
 import br.com.emersonfiwre.drawteam.features.player.model.PlayerStateEnum
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
+class DrawPlayersFragment: Fragment() {
 
     private lateinit var binding: DrawTeamDialogDrawBinding
 
@@ -32,7 +31,7 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
 
     private val playerList = mutableListOf<PlayerModel>()
 
-    var onDrawClickReceived: (teams: List<TeamModel>) -> Unit = {}
+    private var onDrawTeamListener: DrawTeamListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +44,6 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (dialog as? BottomSheetDialog)?.behavior?.state = BottomSheetBehavior.STATE_EXPANDED
         setupViewModel()
         setupPlayerListObservers()
         setupPlayerFoundedObservers()
@@ -54,6 +52,13 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
         setupViews()
         setupRecyclerView()
         viewModel.getPlayers()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is DrawTeamListener) {
+            onDrawTeamListener = context
+        }
     }
 
     private fun setupViewModel() {
@@ -71,7 +76,7 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
                 }
 
                 is DrawPlayersViewState.PlayerListViewState.ShowPlayers -> {
-                    setupPlayers(state.players)
+                    setupPlayers(state.players, state.itemsSelected)
                 }
             }
         }
@@ -86,6 +91,10 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
 
                 is DrawPlayersViewState.PlayerListFoundedViewState.ShowPlayers -> {
                     setupPlayersFounded(state.players)
+                }
+
+                DrawPlayersViewState.PlayerListFoundedViewState.ShowNotPlayersFoundedState -> {
+                    setupNotFoundPlayersContainer(true)
                 }
             }
         }
@@ -128,21 +137,22 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
     }
 
     private fun setupShuffleClick(teams: List<TeamModel>) {
-        onDrawClickReceived(teams)
-        dismiss()
+        onDrawTeamListener?.onDrawClick(teams)
     }
 
     private fun setupDialogWithoutEnoughPlayer() {
         ErrorDialogFragment.newInstance(
-            childFragmentManager,
-            getString(R.string.draw_team_fuck_off)
+            fragmentManager = childFragmentManager,
+            description = getString(R.string.draw_team_fuck_off),
+            warning = true
         )
     }
 
     private fun setupDialogUnselectedPlayers() {
         ErrorDialogFragment.newInstance(
-            childFragmentManager,
-            getString(R.string.draw_team_unselected_players)
+            fragmentManager = childFragmentManager,
+            description = getString(R.string.draw_team_unselected_players),
+            warning = true
         )
     }
 
@@ -166,6 +176,7 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
         binding.idDialogDrawTxtCountPlayers.visibility = View.GONE
         binding.idEmptyPlayerContainer.idViewEmptyPlayer.visibility = View.VISIBLE
         binding.idDialogDrawButton.visibility = View.GONE
+        binding.idDialogResetButton.visibility = View.GONE
     }
 
     private fun setupErrorGetPlayers() {
@@ -174,17 +185,35 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
         binding.idDialogDrawTxtCountPlayers.visibility = View.GONE
         binding.idErrorGetPlayersContainer.idViewErrorGetPlayers.visibility = View.VISIBLE
         binding.idDialogDrawButton.visibility = View.GONE
+        binding.idDialogResetButton.visibility = View.GONE
     }
 
-    private fun setupPlayers(players: List<PlayerModel>) {
+    private fun setupPlayers(players: List<PlayerModel>, itemsSelected: Int) {
         playerList.clear()
         playerList.addAll(players)
         drawPlayerAdapter?.notifyItems(playerList)
+        setupCountPlayersSelected(itemsSelected)
     }
 
     private fun setupPlayersFounded(players: List<PlayerModel>) {
         drawPlayerAdapter?.notifyItems(players)
+        setupNotFoundPlayersContainer(false)
     }
+
+    private fun setupNotFoundPlayersContainer(isNotFound: Boolean) {
+        if (isNotFound) {
+            binding.idDialogDrawRecycler.visibility = View.GONE
+            binding.idDialogDrawButton.visibility = View.GONE
+            binding.idDialogResetButton.visibility = View.GONE
+            binding.idDrawPlayersNotFoundContainer.idViewNotFoundPlayer.visibility = View.VISIBLE
+        } else {
+            binding.idDrawPlayersNotFoundContainer.idViewNotFoundPlayer.visibility = View.GONE
+            binding.idDialogDrawButton.visibility = View.VISIBLE
+            binding.idDialogResetButton.visibility = View.VISIBLE
+            binding.idDialogDrawRecycler.visibility = View.VISIBLE
+        }
+    }
+
 
     private fun setupUpdateListCheck(): (playerModel: PlayerModel) -> Unit = { player ->
         playerList.find { it.uid == player.uid }?.playerState = player.playerState
@@ -209,6 +238,14 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
         binding.idDialogDrawButton.setOnClickListener {
             viewModel.setupDrawPlayers(playerList)
         }
+
+        binding.idDialogResetButton.setOnClickListener {
+            viewModel.setupResetSelection()
+        }
+
+        binding.idDialogDrawTeamBackButton.setOnClickListener {
+            activity?.onBackPressedDispatcher?.onBackPressed()
+        }
         setupCountPlayersSelected()
         setupSearch()
     }
@@ -227,13 +264,6 @@ class DrawPlayersBottomSheetDialog: BottomSheetDialogFragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(
-            fragmentManager: FragmentManager,
-            onDrawClick: (teams: List<TeamModel>) -> Unit
-        ) {
-            DrawPlayersBottomSheetDialog().apply {
-                onDrawClickReceived = onDrawClick
-            }.show(fragmentManager, DrawPlayersBottomSheetDialog::javaClass.name)
-        }
+        fun newInstance() = DrawPlayersFragment()
     }
 }

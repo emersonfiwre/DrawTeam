@@ -1,19 +1,25 @@
 package br.com.emersonfiwre.drawteam.features.home.view.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import br.com.emersonfiwre.drawteam.DrawTeamSession
-import br.com.emersonfiwre.drawteam.databinding.DrawTeamFragmentHomeBinding
+import br.com.emersonfiwre.drawteam.commons.extensions.disableDontKeepActivities
+import br.com.emersonfiwre.drawteam.commons.extensions.serializable
 import br.com.emersonfiwre.drawteam.commons.model.TeamModel
+import br.com.emersonfiwre.drawteam.databinding.DrawTeamFragmentHomeBinding
+import br.com.emersonfiwre.drawteam.features.drawplayers.view.activity.DrawPlayersActivity
+import br.com.emersonfiwre.drawteam.features.drawplayers.view.activity.DrawPlayersActivity.Companion.LIST_TEAMS_RESULT
 import br.com.emersonfiwre.drawteam.features.home.model.TeamViewType
 import br.com.emersonfiwre.drawteam.features.home.view.adapter.TeamsAdapter
-import br.com.emersonfiwre.drawteam.features.drawplayers.view.dialog.DrawPlayersBottomSheetDialog
 import br.com.emersonfiwre.drawteam.features.home.view.dialog.SettingBottomSheet
 import br.com.emersonfiwre.drawteam.features.home.view.provider.CountDownTimerImpl
 import br.com.emersonfiwre.drawteam.features.home.viewmodel.HomeViewModel
@@ -28,7 +34,7 @@ class HomeFragment: Fragment() {
     private var teamAdapter: TeamsAdapter? = null
 
     private val timer by lazy { DrawTeamSession.timerInMilliseconds }
-    private var countDown: CountDownTimer? = null
+    private var countDown: CountDownTimerImpl? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +50,7 @@ class HomeFragment: Fragment() {
         setupObservers()
         setupErrorObservers()
         setupRecyclerView()
+        setupCountDown()
         setupClick()
     }
 
@@ -117,17 +124,29 @@ class HomeFragment: Fragment() {
         }
     }
 
+    private fun setupCountDown() {
+        countDown = CountDownTimerImpl(binding.idDrawTimer, timer, requireContext())
+    }
+
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val teams = result.data?.serializable<ArrayList<TeamModel>>(LIST_TEAMS_RESULT)
+                viewModel.setupListTeams(teams)
+            }
+        }
+
     private fun setupClick() {
         binding.idDrawButton.setOnClickListener {
-            DrawPlayersBottomSheetDialog.newInstance(childFragmentManager, setupOnDraw())
+            startForResult.launch(Intent(context, DrawPlayersActivity::class.java))
         }
 
         binding.idDrawStartGame.setOnClickListener {
-            countDown = CountDownTimerImpl(binding.idDrawTimer, timer).start()
+            countDown?.startTimer()
         }
 
         binding.idDrawCancelGame.setOnClickListener {
-            countDown?.cancel()
+            countDown?.stopTimer()
         }
 
         binding.idDrawConfig.setOnClickListener {
@@ -135,11 +154,21 @@ class HomeFragment: Fragment() {
         }
     }
 
-    private fun setupOnDraw(): (teams: List<TeamModel>) -> Unit = { teamList ->
-        viewModel.setupListTeams(teamList)
+    override fun onDestroy() {
+        super.onDestroy()
+        countDown?.stopTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (context.disableDontKeepActivities()) {
+            DrawTeamSession.teamsShuffledSession?.let { viewModel.setupListTeams(it) }
+        }
     }
 
     companion object {
+
+        private const val TEAMS_SAVE_INSTANCE = "TeamsSaveInstance"
 
         @JvmStatic
         fun newInstance() = HomeFragment()
