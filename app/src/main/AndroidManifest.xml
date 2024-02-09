@@ -15,10 +15,12 @@
         <activity
             android:name=".features.drawplayers.view.activity.DrawPlayersActivity"
             android:exported="false"
+            android:resizeableActivity="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".commons.view.activity.MainActivity"
             android:exported="true"
+            android:resizeableActivity="false"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
