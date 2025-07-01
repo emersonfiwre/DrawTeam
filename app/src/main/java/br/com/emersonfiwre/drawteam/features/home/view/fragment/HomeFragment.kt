@@ -1,7 +1,6 @@
 package br.com.emersonfiwre.drawteam.features.home.view.fragment
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import br.com.emersonfiwre.drawteam.DrawTeamSession
+import br.com.emersonfiwre.drawteam.R
 import br.com.emersonfiwre.drawteam.commons.extensions.disableDontKeepActivities
 import br.com.emersonfiwre.drawteam.commons.extensions.serializable
 import br.com.emersonfiwre.drawteam.commons.model.TeamModel
@@ -21,7 +21,6 @@ import br.com.emersonfiwre.drawteam.features.drawplayers.view.activity.DrawPlaye
 import br.com.emersonfiwre.drawteam.features.home.model.TeamViewType
 import br.com.emersonfiwre.drawteam.features.home.view.adapter.TeamsAdapter
 import br.com.emersonfiwre.drawteam.features.home.view.dialog.SettingBottomSheet
-import br.com.emersonfiwre.drawteam.features.home.view.provider.CountDownTimerImpl
 import br.com.emersonfiwre.drawteam.features.home.viewmodel.HomeViewModel
 import br.com.emersonfiwre.drawteam.features.home.viewmodel.factory.HomeViewModelFactory
 import br.com.emersonfiwre.drawteam.features.home.viewmodel.viewstate.HomeViewState
@@ -32,9 +31,6 @@ class HomeFragment: Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private var teamAdapter: TeamsAdapter? = null
-
-    private val timer by lazy { DrawTeamSession.timerInMilliseconds }
-    private var countDown: CountDownTimerImpl? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,9 +44,9 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
         setupObservers()
+        setupTimerObserver()
         setupErrorObservers()
         setupRecyclerView()
-        setupCountDown()
         setupClick()
     }
 
@@ -70,6 +66,38 @@ class HomeFragment: Fragment() {
 
                 is HomeViewState.HomeListOfTeamViewState.ShowTwoTeams -> {
                     setupTwoTeamsShuffled(state.firstTeam, state.secondTeam)
+                }
+            }
+        }
+    }
+
+    private fun setupTimerObserver() {
+        viewModel.formattedTime.observe(viewLifecycleOwner) { state ->
+            binding.idDrawTimer.text = state
+        }
+        viewModel.isRunning.observe(viewLifecycleOwner) { state ->
+            updateButtonIcon(state, viewModel.timeMillis.value ?: 0L)
+            binding.idDrawStopGame.isEnabled = state
+        }
+
+        viewModel.timeMillis.observe(viewLifecycleOwner) { state ->
+            updateButtonIcon(viewModel.isRunning.value ?: false, state)
+        }
+    }
+
+    private fun updateButtonIcon(running: Boolean, currentTimeMillis: Long) {
+        if (running || (currentTimeMillis > 0L && !running)) {
+            binding.idDrawStartGame.run {
+                setImageResource(R.drawable.draw_team_ic_refresh)
+                setOnClickListener {
+                    viewModel.toggleOrReset()
+                }
+            }
+        } else {
+            binding.idDrawStartGame.run {
+                setImageResource(R.drawable.draw_team_ic_play)
+                setOnClickListener {
+                    viewModel.startTimer()
                 }
             }
         }
@@ -124,10 +152,6 @@ class HomeFragment: Fragment() {
         }
     }
 
-    private fun setupCountDown() {
-        countDown = CountDownTimerImpl(binding.idDrawTimer, timer, requireContext())
-    }
-
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -138,25 +162,20 @@ class HomeFragment: Fragment() {
 
     private fun setupClick() {
         binding.idDrawButton.setOnClickListener {
-            startForResult.launch(Intent(context, DrawPlayersActivity::class.java))
+            DrawPlayersActivity.newInstance(context, startForResult)
         }
 
         binding.idDrawStartGame.setOnClickListener {
-            countDown?.startTimer()
+            viewModel.startTimer()
         }
 
-        binding.idDrawCancelGame.setOnClickListener {
-            countDown?.stopTimer()
+        binding.idDrawStopGame.setOnClickListener {
+            viewModel.stopTimer()
         }
 
         binding.idDrawConfig.setOnClickListener {
             SettingBottomSheet.newInstance(childFragmentManager)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        countDown?.stopTimer()
     }
 
     override fun onResume() {
@@ -167,8 +186,6 @@ class HomeFragment: Fragment() {
     }
 
     companion object {
-
-        private const val TEAMS_SAVE_INSTANCE = "TeamsSaveInstance"
 
         @JvmStatic
         fun newInstance() = HomeFragment()

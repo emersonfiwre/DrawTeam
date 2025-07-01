@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="8dp">
 
     <CheckBox
         android:id="@+id/id_adapter_player_check_box"
@@ -24,5 +24,14 @@
         app:layout_constraintStart_toEndOf="@id/id_adapter_player_check_box"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/draw_team_add_player" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/colorOnSecondary"
+        app:layout_constraintEnd_toEndOf="@id/id_adapter_player_name"
+        app:layout_constraintStart_toStartOf="@id/id_adapter_player_name"
+        app:layout_constraintTop_toBottomOf="@id/id_adapter_player_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

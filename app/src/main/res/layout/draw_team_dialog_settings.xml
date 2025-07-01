@@ -22,43 +22,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/id_dialog_setting_number_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/draw_team_select_timer"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_view_top" />
-
-        <NumberPicker
-            android:id="@+id/id_dialog_setting_number_picker_timer_minute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_number_timer" />
-
-        <TextView
-            android:id="@+id/id_dialog_setting_txt_minute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/draw_team_minutes"
-            app:layout_constraintBottom_toBottomOf="@id/id_dialog_setting_number_picker_timer_minute"
-            app:layout_constraintStart_toEndOf="@id/id_dialog_setting_number_picker_timer_minute"
-            app:layout_constraintTop_toTopOf="@id/id_dialog_setting_number_picker_timer_minute" />
-
-
-        <TextView
             android:id="@+id/id_dialog_setting_txt_setting_team"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/draw_team_settings_team"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_number_picker_timer_minute" />
+            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_view_top" />
 
         <TextView
             android:id="@+id/id_dialog_setting_number_team"
@@ -97,5 +69,33 @@
             android:showDividers="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_txt_setting_team" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/id_dialog_setting_btn_save"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/draw_team_configure"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/id_dialog_setting_btn_cancel"
+            app:layout_constraintTop_toBottomOf="@id/id_dialog_setting_number_picker_players" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/id_dialog_setting_btn_cancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/draw_team_cancel"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/id_dialog_setting_btn_save"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

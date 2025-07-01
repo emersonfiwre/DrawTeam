@@ -135,7 +135,7 @@ class PlayerFragment: Fragment() {
         playerAdapter =
             PlayerAdapter(
                 mutableListOf(),
-                setupAddPlayer()
+                ::setupAddPlayer
             )
         binding.idFragmentPlayerRecycler.run {
             itemAnimator = DefaultItemAnimator()
@@ -143,7 +143,7 @@ class PlayerFragment: Fragment() {
         }
     }
 
-    private fun setupAddPlayer(): () -> Unit = {
+    private fun setupAddPlayer() {
         AddPlayerDialogFragment.newInstance(childFragmentManager)
     }
 

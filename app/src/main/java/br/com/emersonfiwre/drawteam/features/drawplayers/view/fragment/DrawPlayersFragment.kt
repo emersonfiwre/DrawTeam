@@ -261,6 +261,11 @@ class DrawPlayersFragment: Fragment() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        onDrawTeamListener = null
+    }
+
     companion object {
 
         @JvmStatic

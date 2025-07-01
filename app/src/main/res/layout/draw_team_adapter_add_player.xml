@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:padding="12dp"
+    android:background="@drawable/draw_team_shape_corners_stroke_background">
 
     <ImageView
         android:id="@+id/id_add_player_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:importantForAccessibility="no"
         android:src="@drawable/draw_team_ic_add"
         android:theme="@style/DrawTeamTintYellowDarkTheme"
@@ -27,16 +29,5 @@
         app:layout_constraintBottom_toBottomOf="@id/id_add_player_icon"
         app:layout_constraintStart_toEndOf="@id/id_add_player_icon"
         app:layout_constraintTop_toTopOf="@id/id_add_player_icon" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:theme="@style/DrawTeamBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_add_player_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

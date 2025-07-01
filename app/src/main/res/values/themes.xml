@@ -50,10 +50,6 @@
         <item name="android:background">@color/draw_team_white</item>
     </style>
 
-    <style name="DrawTeamTintStopTheme">
-        <item name="android:tint">@color/draw_team_little_black</item>
-    </style>
-
     <style name="DrawTeamTintYellowDarkTheme">
         <item name="android:tint">@color/draw_team_yellow_dark</item>
     </style>

@@ -10,12 +10,12 @@ android {
 
     resourcePrefix 'draw_team_'
 
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "br.com.emersonfiwre.drawteam"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "2.0"
 
@@ -39,6 +39,11 @@ android {
     viewBinding {
         enabled = true
     }
+
+    detekt {
+        // other detekt configuration goes here
+        baseline = file('$rootDir/detekt-baseline.xml')
+    }
 }
 
 dependencies {
@@ -51,7 +56,9 @@ dependencies {
     // Swipe Decorator
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'

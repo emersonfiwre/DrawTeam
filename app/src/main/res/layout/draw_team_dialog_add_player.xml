@@ -16,19 +16,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/id_dialog_edit_name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/id_dialog_txt_input_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/draw_team_name"
-        android:imeOptions="actionDone"
-        android:inputType="textCapSentences"
-        android:scrollHorizontally="true"
-        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        android:theme="@style/DrawTeamTextInputLayout"
+        app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_dialog_title" />
+        app:layout_constraintTop_toBottomOf="@id/id_dialog_title">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/id_dialog_edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/draw_team_name"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/id_dialog_is_goalkeeper"
@@ -39,7 +47,7 @@
         android:text="@string/draw_team_is_goalkeeper"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_dialog_edit_name" />
+        app:layout_constraintTop_toBottomOf="@id/id_dialog_txt_input_name" />
 
     <RadioGroup
         android:id="@+id/id_dialog_radio_group"
