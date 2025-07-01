@@ -33,7 +33,7 @@ class DrawPlayersViewModel(
     val drawErrorViewState: LiveData<DrawPlayersViewState.DrawPlayersError>
         get() = drawErrorState
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     fun getPlayers() {
         coroutineScope.launch {
             try {
@@ -46,7 +46,7 @@ class DrawPlayersViewModel(
         }
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     fun setupDrawPlayers(playerList: List<PlayerModel>) {
         coroutineScope.launch {
             try {
@@ -59,7 +59,7 @@ class DrawPlayersViewModel(
         }
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     fun setupResetSelection() {
         coroutineScope.launch {
             try {
@@ -72,7 +72,7 @@ class DrawPlayersViewModel(
         }
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     fun filterByKeywords(parameter: String, items: List<PlayerModel>?) {
         coroutineScope.launch {
             try {

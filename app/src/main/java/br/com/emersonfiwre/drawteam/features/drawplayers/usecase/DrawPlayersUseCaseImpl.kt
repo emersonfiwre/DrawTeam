@@ -15,7 +15,7 @@ class DrawPlayersUseCaseImpl(
     private val repository: DrawPlayersRepository
 ): DrawPlayersUseCase {
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun getPlayers(): DrawPlayerUseCaseState.PlayerListState {
         return try {
             val result = repository.getPlayersBySession()
@@ -35,7 +35,7 @@ class DrawPlayersUseCaseImpl(
     private fun setupCountItemsSelected(result: List<PlayerModel>) =
         result.count { it.playerState == PlayerStateEnum.CHECKED }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     override fun setupDrawPlayers(players: List<PlayerModel>): DrawPlayerUseCaseState.TeamShuffledState {
         return try {
             val selectedPlayers =
@@ -62,7 +62,7 @@ class DrawPlayersUseCaseImpl(
         }
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun setupResetSelection(): DrawPlayerUseCaseState.PlayerListState {
         return try {
             val model = repository.resetPlayers()
@@ -225,7 +225,7 @@ class DrawPlayersUseCaseImpl(
         return teamsWithoutGoalKeepers[teamIndex]
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     override fun foundPlayerByName(
         parameter: String,
         items: List<PlayerModel>?

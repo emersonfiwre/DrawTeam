@@ -58,7 +58,7 @@ class HomeViewModel(
 
     private var timerJob: Job? = null
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     fun setupListTeams(teamList: List<TeamModel>?) {
         coroutineScope.launch {
             try {

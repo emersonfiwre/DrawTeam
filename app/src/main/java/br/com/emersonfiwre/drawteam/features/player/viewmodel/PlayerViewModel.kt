@@ -24,7 +24,7 @@ class PlayerViewModel(
     val playerErrorViewState: LiveData<PlayerViewState.PlayerError>
         get() = playerErrorState
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     fun setupPlayers() {
         coroutineScope.launch {
             try {
@@ -37,7 +37,7 @@ class PlayerViewModel(
         }
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     fun setupAddPlayers(name: String, goalkeeper: Boolean) {
         coroutineScope.launch {
             try {
@@ -50,7 +50,7 @@ class PlayerViewModel(
         }
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     fun setupDeletePlayer(playerModel: PlayerModel?) {
         coroutineScope.launch {
             try {

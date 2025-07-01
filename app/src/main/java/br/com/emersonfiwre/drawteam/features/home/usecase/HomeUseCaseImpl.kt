@@ -7,7 +7,7 @@ import br.com.emersonfiwre.drawteam.features.player.usecase.PlayerUseCaseImpl
 
 class HomeUseCaseImpl: HomeUseCase {
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     override fun setupPresentationTeams(teamList: List<TeamModel>?): HomeUseCaseState.TeamPresentationState {
         return try {
             when {

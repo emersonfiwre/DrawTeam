@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'io.gitlab.arturbosch.detekt'
 }
 
 android {
@@ -41,8 +42,18 @@ android {
     }
 
     detekt {
+        toolVersion = "1.22.0"
         // other detekt configuration goes here
-        baseline = file('$rootDir/detekt-baseline.xml')
+        baseline = file("$rootDir/detekt-baseline.xml")
+        buildUponDefaultConfig = true
+        source = files(
+                "src/main/java",
+                "src/main/kotlin",
+                "src/test/java",
+                "src/test/kotlin",
+                "src/androidTest/java",
+                "src/androidTest/kotlin"
+        )
     }
 }
 
