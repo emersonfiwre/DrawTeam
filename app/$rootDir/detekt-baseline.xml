@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:DrawTeamSession.kt$DrawTeamSession$5</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$10</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel.&lt;no name provided&gt;$10</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel.&lt;no name provided&gt;$1000</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel.&lt;no name provided&gt;$60</ID>
+    <ID>NewLineAtEndOfFile:AddPlayerDialogFragment.kt$br.com.emersonfiwre.drawteam.features.player.view.dialog.AddPlayerDialogFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:AddPlayerViewHolder.kt$br.com.emersonfiwre.drawteam.features.player.view.viewholder.AddPlayerViewHolder.kt</ID>
+    <ID>NewLineAtEndOfFile:AppDatabase.kt$br.com.emersonfiwre.drawteam.features.player.repository.AppDatabase.kt</ID>
+    <ID>NewLineAtEndOfFile:DrawPlayerUseCaseState.kt$br.com.emersonfiwre.drawteam.features.drawplayers.usecase.state.DrawPlayerUseCaseState.kt</ID>
+    <ID>NewLineAtEndOfFile:DrawPlayersUseCase.kt$br.com.emersonfiwre.drawteam.features.drawplayers.usecase.DrawPlayersUseCase.kt</ID>
+    <ID>NewLineAtEndOfFile:DrawPlayersUseCaseImpl.kt$br.com.emersonfiwre.drawteam.features.drawplayers.usecase.DrawPlayersUseCaseImpl.kt</ID>
+    <ID>NewLineAtEndOfFile:DrawPlayersViewModel.kt$br.com.emersonfiwre.drawteam.features.drawplayers.viewmodel.DrawPlayersViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:DrawPlayersViewModelFactory.kt$br.com.emersonfiwre.drawteam.features.drawplayers.viewmodel.factory.DrawPlayersViewModelFactory.kt</ID>
+    <ID>NewLineAtEndOfFile:DrawTeamConstants.kt$br.com.emersonfiwre.drawteam.commons.constants.DrawTeamConstants.kt</ID>
+    <ID>NewLineAtEndOfFile:DrawTeamSession.kt$br.com.emersonfiwre.drawteam.DrawTeamSession.kt</ID>
+    <ID>NewLineAtEndOfFile:DrawTeamViewModel.kt$br.com.emersonfiwre.drawteam.commons.viewmodel.DrawTeamViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:ErrorDialogFragment.kt$br.com.emersonfiwre.drawteam.commons.view.dialog.ErrorDialogFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:ExampleUnitTest.kt$br.com.emersonfiwre.drawteam.ExampleUnitTest.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeFragment.kt$br.com.emersonfiwre.drawteam.features.home.view.fragment.HomeFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeUseCaseImpl.kt$br.com.emersonfiwre.drawteam.features.home.usecase.HomeUseCaseImpl.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeUseCaseState.kt$br.com.emersonfiwre.drawteam.features.home.usecase.state.HomeUseCaseState.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeViewModel.kt$br.com.emersonfiwre.drawteam.features.home.viewmodel.HomeViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeViewModelFactory.kt$br.com.emersonfiwre.drawteam.features.home.viewmodel.factory.HomeViewModelFactory.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeViewModelMapper.kt$br.com.emersonfiwre.drawteam.features.home.viewmodel.mapper.HomeViewModelMapper.kt</ID>
+    <ID>NewLineAtEndOfFile:ItemTouchHelperProvider.kt$br.com.emersonfiwre.drawteam.features.player.view.provider.ItemTouchHelperProvider.kt</ID>
+    <ID>NewLineAtEndOfFile:MainActivity.kt$br.com.emersonfiwre.drawteam.commons.view.activity.MainActivity.kt</ID>
+    <ID>NewLineAtEndOfFile:NumberPickerExt.kt$br.com.emersonfiwre.drawteam.commons.extensions.NumberPickerExt.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerAdapter.kt$br.com.emersonfiwre.drawteam.features.player.adapter.PlayerAdapter.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerDAO.kt$br.com.emersonfiwre.drawteam.features.player.repository.PlayerDAO.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerFragment.kt$br.com.emersonfiwre.drawteam.features.player.view.fragment.PlayerFragment.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerSelectionsAdapter.kt$br.com.emersonfiwre.drawteam.features.drawplayers.view.adapter.PlayerSelectionsAdapter.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerStateEnum.kt$br.com.emersonfiwre.drawteam.features.player.model.PlayerStateEnum.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerTypeEnum.kt$br.com.emersonfiwre.drawteam.features.player.model.PlayerTypeEnum.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerUseCase.kt$br.com.emersonfiwre.drawteam.features.player.usecase.PlayerUseCase.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerUseCaseState.kt$br.com.emersonfiwre.drawteam.features.player.usecase.state.PlayerUseCaseState.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerViewHolder.kt$br.com.emersonfiwre.drawteam.commons.view.viewholder.PlayerViewHolder.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerViewModel.kt$br.com.emersonfiwre.drawteam.features.player.viewmodel.PlayerViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerViewModelFactory.kt$br.com.emersonfiwre.drawteam.features.player.viewmodel.factory.PlayerViewModelFactory.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerViewModelMapper.kt$br.com.emersonfiwre.drawteam.features.player.viewmodel.mapper.PlayerViewModelMapper.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingBottomSheet.kt$br.com.emersonfiwre.drawteam.features.home.view.dialog.SettingBottomSheet.kt</ID>
+    <ID>NewLineAtEndOfFile:TeamTypeEnum.kt$br.com.emersonfiwre.drawteam.features.home.model.TeamTypeEnum.kt</ID>
+    <ID>NewLineAtEndOfFile:TeamsAdapter.kt$br.com.emersonfiwre.drawteam.features.home.view.adapter.TeamsAdapter.kt</ID>
+    <ID>NewLineAtEndOfFile:TextWatchImpl.kt$br.com.emersonfiwre.drawteam.features.drawplayers.view.listener.TextWatchImpl.kt</ID>
+    <ID>TooGenericExceptionCaught:DrawPlayersUseCaseImpl.kt$DrawPlayersUseCaseImpl$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:DrawPlayersViewModel.kt$DrawPlayersViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:HomeUseCaseImpl.kt$HomeUseCaseImpl$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:HomeViewModel.kt$HomeViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PlayerUseCaseImpl.kt$PlayerUseCaseImpl$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PlayerViewModel.kt$PlayerViewModel$ex: Exception</ID>
+    <ID>TooManyFunctions:DrawPlayersFragment.kt$DrawPlayersFragment : Fragment</ID>
+    <ID>TooManyFunctions:DrawPlayersUseCaseImpl.kt$DrawPlayersUseCaseImpl : DrawPlayersUseCase</ID>
+    <ID>TooManyFunctions:HomeFragment.kt$HomeFragment : Fragment</ID>
+    <ID>TooManyFunctions:PlayerFragment.kt$PlayerFragment : Fragment</ID>
+    <ID>UnusedPrivateMember:HomeViewModel.kt$HomeViewModel.&lt;no name provided&gt;$val centiSeconds = (millis % 1000 / 10).toString().padStart(2, '0') // if needed centiSeconds</ID>
+  </CurrentIssues>
+</SmellBaseline>

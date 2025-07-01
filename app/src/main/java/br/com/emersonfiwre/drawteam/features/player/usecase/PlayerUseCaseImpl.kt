@@ -11,7 +11,7 @@ class PlayerUseCaseImpl(
     private val playerDao: PlayerDAO
 ): PlayerUseCase {
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     override fun getPlayers(): PlayerUseCaseState.PlayerState {
         return try {
             listOf(PlayerModel(playerType = PlayerTypeEnum.ADD_PLAYER))
@@ -43,7 +43,7 @@ class PlayerUseCaseImpl(
         return model
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     override fun addPlayer(
         name: String, goalKeeper: Boolean
     ): PlayerUseCaseState.AddPlayerState {
@@ -57,7 +57,7 @@ class PlayerUseCaseImpl(
         }
     }
 
-    @Suppress("ToGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught")
     override fun deletePlayer(player: PlayerModel?): PlayerUseCaseState.DeletePlayerState {
         return try {
             if (player != null) {
